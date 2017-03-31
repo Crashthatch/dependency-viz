@@ -1,0 +1,16 @@
+{
+  "name": "dependency-viz",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Tom Fletcher",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "d3": "^4.7.4"
+  },
+  "devDependencies": {
+    "rollup": "^0.41.6",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^2.1.1",
+    "rollup-watch": "^3.2.2"
+  }
+}
