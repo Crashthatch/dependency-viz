@@ -4,8 +4,16 @@
   "main": "index.js",
   "author": "Tom Fletcher",
   "license": "UNLICENSED",
+  "scripts": {
+    "watch": "rollup --config --watch --sourcemap",
+    "livereload": "livereload bundle.js",
+    "dev": "yarn run watch & yarn run livereload"
+  },
+
   "dependencies": {
-    "d3": "^4.7.4"
+    "d3": "^4.7.4",
+    "livereload": "^0.6.2",
+    "qwest": "^4.4.5"
   },
   "devDependencies": {
     "rollup": "^0.41.6",

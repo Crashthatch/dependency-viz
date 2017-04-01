@@ -7,7 +7,7 @@ export default {
   moduleName: 'DependencyViz',
   format: 'iife',
   plugins: [
-    resolve({ jsnext: true, main: true }),
+    resolve({ jsnext: true, module:true, main: true }),
     commonjs()
   ]
 };
