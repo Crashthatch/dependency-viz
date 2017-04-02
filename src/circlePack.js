@@ -11,7 +11,7 @@ var color = d3.scaleLinear()
 
 export function initialize(svgg, hierarchy){
   svg = svgg;
-  data = hierarchy;
+  data = hierarchy.sort(function(a, b) { return b.value - a.value; });
 
   var width = +svg.attr("width");
   var height = +svg.attr("height");

@@ -2,6 +2,7 @@ import * as d3 from "d3";
 import qwest from "qwest";
 import * as dependencyTree from "./dependencyTree";
 import * as circlePack from "./circlePack";
+import * as sunburst from "./sunburst";
 
 // Import styles
 import './style.scss';
@@ -23,11 +24,11 @@ function ready(){
         return project.dependencies.filter( x => x); //Filter out nulls (Not sure why they are in there in the first place).
       }
     })
-    .sum(function(d) { return 1; })
-    .sort(function(a, b) { return b.value - a.value; });
+    .sum(function(d) { return 1; });
 
     //dependencyTree.initialize(svg, data);
-    circlePack.initialize(svg, data);
+    //circlePack.initialize(svg, data);
+    sunburst.initialize(svg, data);
 
 
   })
