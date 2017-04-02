@@ -1,7 +1,16 @@
 /* Despite being named .scss, we are actually compiling using postcss with the nested & autoprefixer plugins
 (see rollup.config.json), so not all SCSS features are available. */
+html{
+    height: 100%;
+}
 body{
+    height: 100%;
     background-color: #222222;
+    margin: 0;
+
+    .viz{
+        height: 100%;
+    }
 }
 
 #tree{

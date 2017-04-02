@@ -10,10 +10,12 @@ import './style.scss';
 function ready(){
   var svg = d3.select("svg");
 
+  svg.attr('height', document.body.clientHeight - 3); //Not sure why, but I get a vertical scrollbar if this -3 is not there.
+  svg.attr('width', document.body.clientWidth);
+
   //Load data:
   qwest.get('eslint-tree.json')
   .then(function(xhr, response) {
-    console.log(response);
 
     //Parse data into a hierarchy.
     let data = d3.hierarchy(response, project => {

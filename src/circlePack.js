@@ -13,9 +13,11 @@ export function initialize(svgg, hierarchy){
   svg = svgg;
   data = hierarchy;
 
-  diameter = +Math.min(svg.attr("width"), svg.attr("height"));
+  var width = +svg.attr("width");
+  var height = +svg.attr("height");
+  diameter = +Math.min(width, height);
 
-  g = svg.append("g").attr('id', 'pack').attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+  g = svg.append("g").attr('id', 'pack').attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
   updatePack();
 }
