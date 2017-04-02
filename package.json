@@ -7,8 +7,9 @@
   "scripts": {
     "build": "rollup --config --sourcemap",
     "watch": "rollup --config --watch --sourcemap",
-    "livereload": "livereload bundle.js",
-    "dev": "yarn run livereload & yarn run watch"
+    "serve": "http-server",
+    "livereload": "livereload 'bundle.js,style.css,index.html' -d",
+    "dev": "yarn run serve & yarn run livereload & yarn run watch"
   },
   "dependencies": {
     "d3": "^4.7.4",
@@ -16,9 +17,15 @@
     "qwest": "^4.4.5"
   },
   "devDependencies": {
+    "http-server": "^0.9.0",
+    "postcss-cssnext": "^2.10.0",
+    "postcss-nested": "^1.0.0",
+    "postcss-simple-vars": "^3.1.0",
     "rollup": "^0.41.6",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^2.1.1",
+    "rollup-plugin-postcss": "^0.2.0",
+    "rollup-plugin-postcss-export": "^0.3.2",
     "rollup-watch": "^3.2.2"
   }
 }

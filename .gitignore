@@ -4,3 +4,4 @@ node_modules/
 #Built files:
 bundle.js
 bundle.js.map
+style.css

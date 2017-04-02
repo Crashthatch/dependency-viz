@@ -4,13 +4,15 @@ body{
     background-color: #222222;
 }
 
-.node circle {
-    fill: #99877a;
-}
+.node{
+    circle {
+        fill: #99877a;
+    }
 
-.node text {
-    font: 12px sans-serif;
-    fill: #888;
+    text {
+        font: 12px sans-serif;
+        fill: #888;
+    }
 }
 
 .node--internal circle {

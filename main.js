@@ -1,6 +1,9 @@
 import * as d3 from "d3";
 import qwest from "qwest";
 
+// Import styles
+import './style.scss';
+
 var svg, g, tree, data;
 
 function project(x, y) {
@@ -88,7 +91,7 @@ function updateTree(){
     .on('click', toggleCollapsed);
 
   enterNodes.append("circle")
-    .attr("r", 3);
+    .attr("r", d => d.children || d._children ? 4 : 3);
 
   enterNodes.append("text")
     .attr("dy", ".31em")
