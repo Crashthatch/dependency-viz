@@ -8,7 +8,7 @@
     "build": "rollup --config --sourcemap",
     "watch": "rollup --config --watch --sourcemap",
     "serve": "http-server",
-    "livereload": "livereload 'bundle.js,style.css,index.html' -d",
+    "livereload": "livereload 'dist/*,index.html' -d",
     "dev": "yarn run serve & yarn run livereload & yarn run watch"
   },
   "dependencies": {
