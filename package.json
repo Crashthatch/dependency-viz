@@ -5,11 +5,11 @@
   "author": "Tom Fletcher",
   "license": "UNLICENSED",
   "scripts": {
+    "build": "rollup --config --sourcemap",
     "watch": "rollup --config --watch --sourcemap",
     "livereload": "livereload bundle.js",
-    "dev": "yarn run watch & yarn run livereload"
+    "dev": "yarn run livereload & yarn run watch"
   },
-
   "dependencies": {
     "d3": "^4.7.4",
     "livereload": "^0.6.2",
