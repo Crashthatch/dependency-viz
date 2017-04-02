@@ -59,6 +59,12 @@ function updateTree(){
   allLinks
     .transition().duration(transitionTime)
     .attr("d", function(d) {
+      if(d.parent == root ){
+        //Straight lines in the middle.
+        return "M" + project(d.x, d.y)
+          + "L" + project(d.parent.x, d.parent.y);
+
+      }
       return "M" + project(d.x, d.y)
         + "C" + project(d.x, (d.y + d.parent.y) / 2)
         + " " + project(d.parent.x, (d.y + d.parent.y) / 2)
