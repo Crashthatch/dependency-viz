@@ -17,7 +17,9 @@ export function initialize(svgg, hierarchy){
   var height = +svg.attr("height");
   diameter = +Math.min(width, height);
 
-  g = svg.append("g").attr('id', 'pack').attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  g = svg.append("g")
+    .attr('id', 'pack')
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
   updatePack();
 }

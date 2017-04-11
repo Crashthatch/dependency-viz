@@ -2,14 +2,9 @@ import * as d3 from "d3";
 import { transitionTime } from "./config";
 
 var svg, data, g, radius;
-// Keep track of the node that is currently being displayed as the root.
-var node;
-
-var margin = 20;
-var formatNumber = d3.format(",d");
 
 var x = d3.scaleLinear()
-  .range([0, 2 * Math.PI]);
+  .range([-Math.PI, Math.PI]);
 var y;
 
 var color = d3.scaleLinear()
@@ -20,8 +15,8 @@ var color = d3.scaleLinear()
 var partition = d3.partition();
 
 var arc = d3.arc()
-  .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x0))); })
-  .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x1))); })
+  .startAngle(function(d) { return Math.max(-Math.PI, Math.min(Math.PI, x(d.x0))); })
+  .endAngle(function(d) { return Math.max(-Math.PI, Math.min(Math.PI, x(d.x1))); })
   .innerRadius(function(d) { return Math.max(0, y(d.y0)); })
   .outerRadius(function(d) { return Math.max(0, y(d.y1)); });
 
@@ -38,7 +33,16 @@ export function initialize(svgg, hierarchy){
 
   g = svg.append("g").attr('id', 'sunburst').attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+
+
   update();
+
+  g.append('text')
+    .attr('id', 'centerText')
+    .style("fill-opacity", 1)
+    .style("stroke-color", "black")
+    .style("fill", "black")
+    .attr('y',-25);
 }
 
 function click(d) {
@@ -54,6 +58,20 @@ function click(d) {
     .attrTween("d", function(d) { return function() { return arc(d); }; });
 }
 
+function mouseover(d){
+  g.select('#centerText')
+    .text(function(){
+      if(d.data.dependency){
+        return d.data.dependency.project_name;
+      }
+    });
+}
+
+function mouseout(d){
+  g.select('#centerText')
+    .text('');
+}
+
 export function update(){
 
   g.selectAll("path")
@@ -62,6 +80,8 @@ export function update(){
     .attr("d", (d) => {console.log(arc(d)); return arc(d); })
     .style("fill", function(d) { return color(d.depth); })
     .on("click", click)
+    .on("mouseover", mouseover)
+    .on("mouseout", mouseout)
     .append("title")
     .text(function(d) {
       if(d.data.dependency){

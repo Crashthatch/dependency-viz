@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import qwest from "qwest";
+import _ from 'lodash';
 import * as dependencyTree from "./dependencyTree";
 import * as circlePack from "./circlePack";
 import * as sunburst from "./sunburst";
@@ -28,7 +29,13 @@ function ready(){
 
     //dependencyTree.initialize(svg, data);
     //circlePack.initialize(svg, data);
-    sunburst.initialize(svg, data);
+    sunburst.initialize(svg, _.cloneDeep(data));
+
+
+    //Create thumbnail selectors:
+    /*dependencyTree.initialize(d3.select('.tree-selector svg'), _.cloneDeep(data));
+    circlePack.initialize(d3.select('.pack-selector svg'), _.cloneDeep(data));
+    sunburst.initialize(d3.select('.sun-selector svg'), _.cloneDeep(data));*/
 
 
   })
