@@ -2,6 +2,7 @@ import * as d3 from "d3";
 import { transitionTime } from "./config";
 
 var data, g;
+var levelSizePx = 100;
 
 export function initialize(svg, hierarchy){
   //Parse data into a hierarchy.
@@ -20,8 +21,9 @@ export function initialize(svg, hierarchy){
 }
 
 
-function project(x, y) {
-  var angle = (x - 90) / 180 * Math.PI, radius = y;
+function project(x, y, depth) {
+  var angle = (x - 90) / 180 * Math.PI;
+  var radius = levelSizePx*depth; //Don't use y, as we don't want to stretch to fit the "1000px" size for small packages with few dependencies.
   return [radius * Math.cos(angle), radius * Math.sin(angle)];
 }
 
@@ -51,7 +53,7 @@ export function updateTree(){
 
   //Create radial tree layout
   let tree = d3.tree()
-    .size([360, 900])
+    .size([360, 1000])
     .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
   //Put data into tree.
@@ -71,16 +73,15 @@ export function updateTree(){
   allLinks
     .transition().duration(transitionTime)
     .attr("d", function(d) {
-      if(d.parent == root ){
-        //Straight lines in the middle.
-        return "M" + project(d.x, d.y)
-          + "L" + project(d.parent.x, d.parent.y);
+      if(d.parent == root ){ //Straight lines in the middle.
+        return "M" + project(d.x, d.y, d.depth)
+          + "L" + project(d.parent.x, d.parent.y, d.parent.depth);
 
       }
-      return "M" + project(d.x, d.y)
-        + "C" + project(d.x, (d.y + d.parent.y) / 2)
-        + " " + project(d.parent.x, (d.y + d.parent.y) / 2)
-        + " " + project(d.parent.x, d.parent.y);
+      return "M" + project(d.x, d.y, d.depth)
+        + "C" + project(d.x, (d.y + d.parent.y) / 2, d.depth)
+        + " " + project(d.parent.x, (d.y + d.parent.y) / 2, d.parent.depth)
+        + " " + project(d.parent.x, d.parent.y, d.parent.depth);
     });
 
 
@@ -100,10 +101,10 @@ export function updateTree(){
     .attr("class", function(d) { return "node" + (d.children || d._children ? " node--internal" : " node--leaf"); })
     .attr("transform", function(d) {
       if(d.parent){
-        return "translate(" + project(d.parent.x, d.parent.y) + ")";
+        return "translate(" + project(d.parent.x, d.parent.y, d.parent.depth) + ")";
       }
       else{
-        return "translate(" + project(0, 0) + ")";
+        return "translate(" + project(0, 0, 0) + ")";
       }
     })//Create at the parent, then transition to their proper position.
     .on('click', toggleCollapsed);
@@ -122,7 +123,7 @@ export function updateTree(){
   let allNodes = g.selectAll(".node"); //Optimization: could do .merge(nodes) after the append('g') above if this selectAll is a bottleneck (https://github.com/d3/d3-selection#selection_merge)
   allNodes
     .transition().duration(transitionTime)
-    .attr("transform", function(d) { return "translate(" + project(d.x, d.y) + ")"; });
+    .attr("transform", function(d) { return "translate(" + project(d.x, d.y, d.depth) + ")"; });
 
   let allNodesText = g.selectAll('.node text');
   allNodesText
