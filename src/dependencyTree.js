@@ -4,7 +4,14 @@ import { transitionTime } from "./config";
 var data, g;
 
 export function initialize(svg, hierarchy){
-  data = hierarchy;
+  //Parse data into a hierarchy.
+  data = d3.hierarchy(hierarchy, project => {
+    if(project.dependencies.length > 0){
+      return project.dependencies.filter( x => x); //Filter out nulls (Not sure why they are in there in the first place).
+    }
+  })
+  .sum(function(d) { return 1; });
+
   var width = +svg.attr("width");
   var height = +svg.attr("height");
   g = svg.append("g").attr('id', 'tree').attr("transform", "translate(" + (width / 2 + 40) + "," + (height / 2 + 90) + ")");

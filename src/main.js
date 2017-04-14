@@ -18,18 +18,10 @@ function ready(){
 
   //Load data:
   qwest.get('eslint-tree.json')
-  .then(function(xhr, response) {
+  .then(function(xhr, data) {
 
-    //Parse data into a hierarchy.
-    let data = d3.hierarchy(response, project => {
-      if(project.dependencies.length > 0){
-        return project.dependencies.filter( x => x); //Filter out nulls (Not sure why they are in there in the first place).
-      }
-    })
-    .sum(function(d) { return 1; });
-
-    //dependencyTree.initialize(svg, data);
-    circlePack.initialize(svg, data);
+    //dependencyTree.initialize(svg, _.cloneDeep(data));
+    circlePack.initialize(svg, _.cloneDeep(data));
     //sunburst.initialize(svg, _.cloneDeep(data));
 
 

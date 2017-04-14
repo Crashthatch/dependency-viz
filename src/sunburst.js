@@ -22,7 +22,14 @@ var arc = d3.arc()
 
 export function initialize(svgg, hierarchy){
   svg = svgg;
-  data = hierarchy.sort(function(a, b) { return b.value - a.value; });
+  //Parse data into a hierarchy.
+  data = d3.hierarchy(hierarchy, project => {
+    if(project.dependencies.length > 0){
+      return project.dependencies.filter( x => x); //Filter out nulls (Not sure why they are in there in the first place).
+    }
+  })
+  .sum(function(d) { return 1; })
+  .sort(function(a, b) { return b.value - a.value; });
 
   var width = +svg.attr("width");
   var height = +svg.attr("height");

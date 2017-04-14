@@ -53,13 +53,13 @@ body{
     }
 
     .node--leaf {
-        fill: white;
+        //fill: white;
     }
 
     .label {
-        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
         text-anchor: middle;
-        text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+        text-shadow: 0 1px 0 #ddd, 1px 0 0 #ddd, -1px 0 0 #ddd, 0 -1px 0 #ddd;
     }
 
     .label,
