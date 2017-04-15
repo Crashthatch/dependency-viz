@@ -1,10 +1,9 @@
 import * as d3 from "d3";
 import { transitionTime } from "./config";
 
-var data, g;
-var levelSizePx = 100;
+var data, g, levelSizePx;
 
-export function initialize(svg, hierarchy){
+export function initialize(svg, hierarchy, center, radius){
   //Parse data into a hierarchy.
   data = d3.hierarchy(hierarchy, project => {
     if(project.dependencies.length > 0){
@@ -13,9 +12,11 @@ export function initialize(svg, hierarchy){
   })
   .sum(function(d) { return 1; });
 
-  var width = +svg.attr("width");
-  var height = +svg.attr("height");
-  g = svg.append("g").attr('id', 'tree').attr("transform", "translate(" + (width / 2 + 40) + "," + (height / 2 + 90) + ")");
+  levelSizePx = Math.min(radius / 3, 130);
+
+  g = svg.append("g")
+    .attr('id', 'tree')
+    .attr("transform", "translate(" + center[0] + "," + center[1] + ")");
 
   updateTree();
 }

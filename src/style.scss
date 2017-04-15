@@ -8,9 +8,42 @@ body{
     background-color: #222222;
     margin: 0;
 
+    .topbar{
+        position: absolute;
+        left: 0px;
+        right: 200px;
+        height: 80px;
+        background-color: #0b97c4;
+        opacity: 0.5;
+    }
+
     .viz{
         height: 100%;
         width: 100%;
+        float:left;
+    }
+
+    .sidebar{
+        position:absolute;
+        right: 0px;
+        background-color: yellow;
+        opacity: 0.5;
+        float:left;
+        width: 200px;
+        height: 100%;
+        right: 0px;
+        top: 0px;
+
+        .viz-selector{
+            width: 100%;
+
+            div{
+                float:left;
+                width: 33%;
+                height: 80px;
+                background-color: red;
+            }
+        }
     }
 }
 
@@ -80,26 +113,3 @@ body{
         stroke: white;
     }
 }
-
-.sidebar{
-    width: 200px;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-
-    .viz-selector{
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 100%;
-
-        div{
-            float:left;
-            width: 33%;
-            height: 70px;
-            background-color: red;
-        }
-    }
-}
-
-

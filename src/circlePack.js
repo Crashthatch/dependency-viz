@@ -10,7 +10,7 @@ var color = d3.scaleLinear()
   .range(["hsl(25,70%,40%)", "hsl(25,50%,10%)"])
   .interpolate(d3.interpolateHcl);
 
-export function initialize(svgg, hierarchy){
+export function initialize(svgg, hierarchy, center, radius){
   svg = svgg;
 
   //Parse data into a hierarchy.
@@ -23,15 +23,13 @@ export function initialize(svgg, hierarchy){
     }
   })
   .sum(function(d) { return 1; })
-  .sort(function(a, b) { return b.value - a.value; });
+  //.sort(function(a, b) { return b.value - a.value; });
 
-  var width = +svg.attr("width");
-  var height = +svg.attr("height");
-  diameter = +Math.min(width, height);
+  diameter = radius*2;
 
   g = svg.append("g")
     .attr('id', 'pack')
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    .attr("transform", "translate(" + center[0] + "," + center[1] + ")");
 
   updatePack();
 }

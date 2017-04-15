@@ -20,9 +20,15 @@ function ready(){
   qwest.get('eslint-tree.json')
   .then(function(xhr, data) {
 
-    //dependencyTree.initialize(svg, _.cloneDeep(data));
-    circlePack.initialize(svg, _.cloneDeep(data));
-    //sunburst.initialize(svg, _.cloneDeep(data));
+    let center = [
+      (document.body.clientWidth-200)/2, //Make room for sidebar
+      (document.body.clientHeight-80)/2+80 //Make room for top bar
+    ];
+    let radius = Math.min(document.body.clientWidth-200, document.body.clientHeight-80)/2;
+
+    //dependencyTree.initialize(svg, _.cloneDeep(data), center, radius);
+    //circlePack.initialize(svg, _.cloneDeep(data), center, radius);
+    sunburst.initialize(svg, _.cloneDeep(data), center, radius);
 
 
     //Create thumbnail selectors:
@@ -32,15 +38,15 @@ function ready(){
 
     $('.tree-selector').on('click', function(){
       svg.selectAll("*").remove();
-      dependencyTree.initialize(svg, _.cloneDeep(data));
+      dependencyTree.initialize(svg, _.cloneDeep(data), center, radius);
     });
     $('.pack-selector').on('click', function(){
       svg.selectAll("*").remove();
-      circlePack.initialize(svg, _.cloneDeep(data));
+      circlePack.initialize(svg, _.cloneDeep(data), center, radius);
     });
     $('.sun-selector').on('click', function(){
       svg.selectAll("*").remove();
-      sunburst.initialize(svg, _.cloneDeep(data));
+      sunburst.initialize(svg, _.cloneDeep(data), center, radius);
     });
 
 

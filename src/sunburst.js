@@ -20,8 +20,9 @@ var arc = d3.arc()
   .innerRadius(function(d) { return Math.max(0, y(d.y0)); })
   .outerRadius(function(d) { return Math.max(0, y(d.y1)); });
 
-export function initialize(svgg, hierarchy){
+export function initialize(svgg, hierarchy, center, r){
   svg = svgg;
+  radius = r;
   //Parse data into a hierarchy.
   data = d3.hierarchy(hierarchy, project => {
     if(project.dependencies.length > 0){
@@ -31,14 +32,12 @@ export function initialize(svgg, hierarchy){
   .sum(function(d) { return 1; })
   .sort(function(a, b) { return b.value - a.value; });
 
-  var width = +svg.attr("width");
-  var height = +svg.attr("height");
-  radius = +Math.min(width, height)/2;
-
   y = d3.scaleSqrt()
     .range([0, radius]);
 
-  g = svg.append("g").attr('id', 'sunburst').attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  g = svg.append("g")
+    .attr('id', 'sunburst')
+    .attr("transform", "translate(" + center[0] + "," + center[1] + ")");
 
 
 
@@ -84,7 +83,7 @@ export function update(){
   g.selectAll("path")
     .data(partition(data).descendants())
     .enter().append("path")
-    .attr("d", (d) => {console.log(arc(d)); return arc(d); })
+    .attr("d", (d) => arc(d) )
     .style("fill", function(d) { return color(d.depth); })
     .on("click", click)
     .on("mouseover", mouseover)
