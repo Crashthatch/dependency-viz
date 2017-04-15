@@ -3,6 +3,10 @@ import { transitionTime } from "./config";
 
 var data, g, levelSizePx;
 
+function zoomed(d){
+  g.attr('transform', "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ")");
+}
+
 export function initialize(svg, hierarchy, center, radius){
   //Parse data into a hierarchy.
   data = d3.hierarchy(hierarchy, project => {
@@ -15,8 +19,17 @@ export function initialize(svg, hierarchy, center, radius){
   levelSizePx = Math.min(radius / 3, 130);
 
   g = svg.append("g")
-    .attr('id', 'tree')
-    .attr("transform", "translate(" + center[0] + "," + center[1] + ")");
+    .attr('id', 'tree');
+
+  var zoom = d3.zoom()
+    .scaleExtent([1,1])//Disable scaling.
+    .translateExtent([[-1300, -1300], [1300, 1300]]) //This box should contain all the "visible things" that the viewport can be scrolled to see.
+    .on("zoom", zoomed);
+
+  zoom.transform(svg, d3.zoomIdentity); //Reset zoom in case it was changed before initialize() was called (eg. previous viz)
+  zoom.translateBy(svg, center[0], center[1]);
+
+  svg.call(zoom);
 
   updateTree();
 }

@@ -26,9 +26,9 @@ function ready(){
     ];
     let radius = Math.min(document.body.clientWidth-200, document.body.clientHeight-80)/2;
 
-    //dependencyTree.initialize(svg, _.cloneDeep(data), center, radius);
+    dependencyTree.initialize(svg, _.cloneDeep(data), center, radius);
     //circlePack.initialize(svg, _.cloneDeep(data), center, radius);
-    sunburst.initialize(svg, _.cloneDeep(data), center, radius);
+    //sunburst.initialize(svg, _.cloneDeep(data), center, radius);
 
 
     //Create thumbnail selectors:
