@@ -24,7 +24,7 @@ function ready(){
   radius = Math.min(document.body.clientWidth-200, document.body.clientHeight-80)/2;
 
   //Load data:
-  qwest.get('d3-tree.json')
+  qwest.get('eslint-tree.json')
   .then(function(xhr, response) {
 
     data = response;
@@ -57,8 +57,9 @@ function ready(){
     sunburst.initialize(svg, _.cloneDeep(data), center, radius);
   });
 
-  $('.search-button').on('click', function(){
-    $('.search-button').text('Loading...');
+  $('#search').on('submit', function(event){
+    event.preventDefault();
+    $('.search-button').attr('value', 'Searching...');
 
     let searchTerm = $('#search-input').val();
 
@@ -79,7 +80,7 @@ function ready(){
       //TODO: Handle tree get failure.
     })
     .then(function(){
-      $('.search-button').text('Search');
+      $('.search-button').attr('value', 'Search');
     });
   });
 
