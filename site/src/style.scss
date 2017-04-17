@@ -11,8 +11,8 @@ body{
     .topbar{
         position: absolute;
         left: 0px;
-        right: 200px;
-        height: 80px;
+        right: 250px;
+        height: 60px;
 
         .search-container{
             padding: 15px;
@@ -50,22 +50,35 @@ body{
     .sidebar{
         position:absolute;
         right: 0px;
-        background-color: yellow;
-        opacity: 0.5;
-        float:left;
-        width: 200px;
-        height: 100%;
+        width: 250px;
         right: 0px;
         top: 0px;
 
         .viz-selector{
-            width: 100%;
+            width: calc(100% - 20px);
+            padding: 10px;
+            cursor: pointer;
+
+            .tree-selector{
+                background-image: url(/img/tree2-150.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+            .pack-selector{
+                background-image: url(/img/circlepack-150.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+            .sun-selector{
+                background-image: url(/img/sunburst-150.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
 
             div{
                 float:left;
                 width: 33%;
                 height: 80px;
-                background-color: red;
             }
         }
     }

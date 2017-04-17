@@ -18,8 +18,8 @@ function ready(){
   svg.attr('width', document.body.clientWidth);
 
   center = [
-    (document.body.clientWidth-200)/2, //Make room for sidebar
-    (document.body.clientHeight-80)/2+80 //Make room for top bar
+    (document.body.clientWidth)/2, //-250 to Make room for sidebar, when we eventually add one.
+    (document.body.clientHeight-60)/2+60 //Make room for top bar
   ];
   radius = Math.min(document.body.clientWidth-200, document.body.clientHeight-80)/2;
 
