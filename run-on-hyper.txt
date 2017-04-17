@@ -1,0 +1,4 @@
+#To Run this image on Hyper:
+hyper run -d --name depviz --size s2 -P --env VIRTUAL_HOST=dependencyviz.crashthatch.com --env LIBRARIES_IO_API_KEY=<KEY HERE> 016279857314.dkr.ecr.us-east-1.amazonaws.com/depviz
+
+#Then re-run the loadbalancer (instructions in workspace/hyper-load-balancer-lb.txt)

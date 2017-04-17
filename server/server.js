@@ -24,7 +24,7 @@ app.get('/tree', function (req, res) {
 //Serve the site's static files (These could come from any static HTTP server, but as we need to run this one for the /tree proxy calls, may as well also serve static files)
 app.use(express.static('site'));
 
-app.listen(3000, function () {
-  console.log('Server listening on port 3000!')
+app.listen(80, function () {
+  console.log('Server listening on port 80!')
 });
 
