@@ -29,8 +29,8 @@ function ready(){
 
     data = response;
 
-    dependencyTree.initialize(svg, _.cloneDeep(data), center, radius);
-    //circlePack.initialize(svg, _.cloneDeep(data), center, radius);
+    //dependencyTree.initialize(svg, _.cloneDeep(data), center, radius);
+    circlePack.initialize(svg, _.cloneDeep(data), center, radius);
     //sunburst.initialize(svg, _.cloneDeep(data), center, radius);
 
 
@@ -74,7 +74,7 @@ function ready(){
     .then( function(xhr, response){
       data = response;
       svg.selectAll("*").remove();
-      dependencyTree.initialize(svg, _.cloneDeep(data), center, radius);
+      circlePack.initialize(svg, _.cloneDeep(data), center, radius);
 
     }, function(){
       //TODO: Handle tree get failure.

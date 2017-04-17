@@ -13,8 +13,32 @@ body{
         left: 0px;
         right: 200px;
         height: 80px;
-        background-color: #0b97c4;
-        opacity: 0.5;
+
+        .search-container{
+            padding: 15px;
+            width: 100%;
+
+            #search-input{
+                height: 30px;
+                padding-left: 10px;
+                border-radius: 20px;
+                width: calc( 100% - 30px - 100px );
+            }
+            #search-input:focus{
+                outline: none;
+            }
+            .search-button{
+                height: 35px;
+                width: 90px;
+                border-radius: 20px;
+                background: linear-gradient(to bottom, orange, darkorange);
+                border-color: #cd8000;
+            }
+            #search-button:focus{
+                outline: none;
+            }
+        }
+
     }
 
     .viz{
