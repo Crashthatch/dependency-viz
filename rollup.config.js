@@ -8,8 +8,8 @@ import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';
 
 export default {
-  entry: 'src/main.js',
-  dest: 'dist/bundle.js',
+  entry: 'site/src/main.js',
+  dest: 'site/dist/bundle.js',
   moduleName: 'DependencyViz',
   format: 'iife',
   plugins: [
@@ -19,7 +19,7 @@ export default {
         nested(),
         cssnext({ warnForDuplicates: false })
       ],
-      output: './dist/style.css',
+      output: './site/dist/style.css',
       extensions: ['.scss']
     }),
     resolve({ jsnext: true, module:true, main: true }),

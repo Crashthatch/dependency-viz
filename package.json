@@ -7,16 +7,19 @@
   "scripts": {
     "build": "rollup --config --sourcemap",
     "watch": "rollup --config --watch --sourcemap",
-    "serve": "http-server",
-    "livereload": "livereload 'dist/*,index.html' -d",
+    "serve": "node server/server.js",
+    "livereload": "livereload 'site/dist/*,site/index.html' -d",
     "dev": "npm-run-all --parallel serve livereload watch"
   },
   "dependencies": {
     "d3": "^4.7.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
     "jquery": "^3.2.1",
     "livereload": "^0.6.2",
     "lodash": "^4.17.4",
-    "qwest": "^4.4.5"
+    "qwest": "^4.4.5",
+    "request": "^2.81.0"
   },
   "devDependencies": {
     "http-server": "^0.9.0",
