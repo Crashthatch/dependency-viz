@@ -1,4 +1,5 @@
 var express = require('express');
+var compression = require('compression');
 var request = require('request');
 var app = express();
 
@@ -9,6 +10,8 @@ if( !process.env.LIBRARIES_IO_API_KEY ){
   console.error('LIBRARIES_IO_API_KEY not set (You can create a .env file from sample.env, or set it in your environment.)');
   process.exit(1);
 }
+
+app.use(compression());
 
 app.get('/tree', function (req, res) {
   if( !req.query.platform || !req.query.name ){
@@ -24,7 +27,12 @@ app.get('/tree', function (req, res) {
 //Serve the site's static files (These could come from any static HTTP server, but as we need to run this one for the /tree proxy calls, may as well also serve static files)
 app.use(express.static('site'));
 
-app.listen(80, function () {
-  console.log('Server listening on port 80!')
+let port = 80;
+if( process.env.PORT ){
+  port = process.env.PORT;
+}
+
+app.listen(port, function () {
+  console.log('Server listening on port '+port+'!')
 });
 

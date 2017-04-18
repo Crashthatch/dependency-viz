@@ -12,6 +12,14 @@ import './style.scss';
 let data, radius, center;
 
 function ready(){
+  //Look for livereload if running locally:
+  if( window.location.hostname == "localhost" ){
+    var script   = document.createElement("script");
+    script.type  = "text/javascript";
+    script.src   = 'http://' + (location.host || 'localhost').split(':')[0] +':35729/livereload.js?snipver=1';    // use this for linked script
+    document.head.appendChild(script);
+  }
+
   var svg = d3.select("svg");
 
   svg.attr('height', document.body.clientHeight - 3); //Not sure why, but I get a vertical scrollbar if this -3 is not there.
