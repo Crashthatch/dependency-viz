@@ -5,6 +5,7 @@
   "author": "Tom Fletcher",
   "license": "UNLICENSED",
   "scripts": {
+    "build-prod": "rollup --config rollup-prod.config.js",
     "build": "rollup --config --sourcemap",
     "watch": "rollup --config --watch --sourcemap",
     "serve": "node server/server.js",
@@ -22,16 +23,19 @@
     "request": "^2.81.0"
   },
   "devDependencies": {
+    "babel-preset-es2015-rollup": "^3.0.0",
     "http-server": "^0.9.0",
     "npm-run-all": "^4.0.2",
     "postcss-cssnext": "^2.10.0",
     "postcss-nested": "^1.0.0",
     "postcss-simple-vars": "^3.1.0",
     "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^2.1.1",
     "rollup-plugin-postcss": "^0.2.0",
     "rollup-plugin-postcss-export": "^0.3.2",
+    "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2"
   }
 }

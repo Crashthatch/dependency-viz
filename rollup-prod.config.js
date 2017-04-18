@@ -1,12 +1,14 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
+import uglify from 'rollup-plugin-uglify';
 
 import postcss from 'rollup-plugin-postcss-export';
 //postcss plugins
 import simplevars from 'postcss-simple-vars';
 import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';
+
 
 export default {
   entry: 'site/src/main.js',
@@ -27,6 +29,7 @@ export default {
       exclude: 'node_modules/**'
     }),
     resolve({ jsnext: true, module:true, main: true }),
-    commonjs()
+    commonjs(),
+    uglify()
   ]
 };
