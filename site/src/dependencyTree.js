@@ -35,7 +35,7 @@ export function initialize(svg, hierarchy, center, radius){
 }
 
 
-function project(x, y, depth) {
+function project(x, depth) {
   var angle = (x - 90) / 180 * Math.PI;
   var radius = levelSizePx*depth; //Don't use y, as we don't want to stretch to fit the "1000px" size for small packages with few dependencies.
   return [radius * Math.cos(angle), radius * Math.sin(angle)];
@@ -65,6 +65,14 @@ function toggleCollapsed(d) {
 
 export function updateTree(){
 
+  var oldLocations = new Map();
+  g.selectAll('.node')
+    .each( function(node){
+      if( node.data.dependency ){
+        oldLocations.set(node.data.dependency.id, {x: node.x, depth: node.depth});
+      }
+    });
+
   //Create radial tree layout
   let tree = d3.tree()
     .size([360, 1000])
@@ -81,21 +89,34 @@ export function updateTree(){
 
   var enterLinks = links.enter()
     .append("path")
-    .attr("class", "link");
+    .attr("class", "link")
+    .attr("d", function(d){
+      let oldParentLocation;
+      if(d.parent && d.parent.data.dependency && oldLocations.has(d.parent.data.dependency.id) ){
+        oldParentLocation = oldLocations.get(d.parent.data.dependency.id);
+      }
+      else{
+        oldParentLocation = d.parent; //Fall back to the new location of the parent.
+      }
+      return "M" + project(oldParentLocation.x, oldParentLocation.depth)
+        + "C" + project(oldParentLocation.x, oldParentLocation.depth)
+        + " " + project(oldParentLocation.x, oldParentLocation.depth)
+        + " " + project(oldParentLocation.x, oldParentLocation.depth);
+    });
 
   var allLinks = g.selectAll('.link');
   allLinks
     .transition().duration(transitionTime)
     .attr("d", function(d) {
       if(d.parent == root ){ //Straight lines in the middle.
-        return "M" + project(d.x, d.y, d.depth)
-          + "L" + project(d.parent.x, d.parent.y, d.parent.depth);
+        return "M" + project(d.x, d.depth)
+          + "L" + project(d.parent.x, d.parent.depth);
 
       }
-      return "M" + project(d.x, d.y, d.depth)
-        + "C" + project(d.x, (d.y + d.parent.y) / 2, d.depth)
-        + " " + project(d.parent.x, (d.y + d.parent.y) / 2, d.parent.depth)
-        + " " + project(d.parent.x, d.parent.y, d.parent.depth);
+      return "M" + project(d.x, d.depth)
+        + "C" + project(d.x, (d.depth + d.parent.depth) / 2)
+        + " " + project(d.parent.x,(d.depth + d.parent.depth)/2)
+        + " " + project(d.parent.x, d.parent.depth);
     });
 
 
@@ -114,11 +135,15 @@ export function updateTree(){
     .append("g")
     .attr("class", function(d) { return "node" + (d.children || d._children ? " node--internal" : " node--leaf"); })
     .attr("transform", function(d) {
-      if(d.parent){
-        return "translate(" + project(d.parent.x, d.parent.y, d.parent.depth) + ")";
+      if(d.parent && d.parent.data.dependency && oldLocations.has(d.parent.data.dependency.id)){
+        let oldParentLocation = oldLocations.get(d.parent.data.dependency.id);
+        return "translate(" + project(oldParentLocation.x, oldParentLocation.depth) + ")";
+      }
+      else if( d.parent ){
+        return "translate(" + project(d.parent.x, d.parent.depth) + ")";
       }
       else{
-        return "translate(" + project(0, 0, 0) + ")";
+        return "translate(" + project(0, 0) + ")"; //Fall back to the new location of the parent.
       }
     })//Create at the parent, then transition to their proper position.
     .on('click', toggleCollapsed);
@@ -137,7 +162,7 @@ export function updateTree(){
   let allNodes = g.selectAll(".node"); //Optimization: could do .merge(nodes) after the append('g') above if this selectAll is a bottleneck (https://github.com/d3/d3-selection#selection_merge)
   allNodes
     .transition().duration(transitionTime)
-    .attr("transform", function(d) { return "translate(" + project(d.x, d.y, d.depth) + ")"; });
+    .attr("transform", function(d) { return "translate(" + project(d.x, d.depth) + ")"; });
 
   let allNodesText = g.selectAll('.node text');
   allNodesText
