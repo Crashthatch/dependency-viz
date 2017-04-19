@@ -7,6 +7,14 @@ body{
     height: 100%;
     background-color: #222222;
     margin: 0;
+    *{
+        box-sizing: border-box;
+    }
+
+    .hud{
+        position: absolute;
+        width: 100%;
+    }
 
     .topbar{
         position: absolute;
@@ -22,7 +30,7 @@ body{
                 height: 30px;
                 padding-left: 10px;
                 border-radius: 20px;
-                width: calc( 100% - 30px - 100px );
+                width: calc( 100% - 100px );
             }
             #search-input:focus{
                 outline: none;
@@ -55,22 +63,25 @@ body{
         top: 0px;
 
         .viz-selector{
-            width: calc(100% - 20px);
+            width: 100%;
             padding: 10px;
             cursor: pointer;
 
             .tree-selector{
                 background-image: url(/img/tree2-150.png);
+                background-position-x: center;
                 background-size: contain;
                 background-repeat: no-repeat;
             }
             .pack-selector{
                 background-image: url(/img/circlepack-150.png);
+                background-position-x: center;
                 background-size: contain;
                 background-repeat: no-repeat;
             }
             .sun-selector{
                 background-image: url(/img/sunburst-150.png);
+                background-position-x: center;
                 background-size: contain;
                 background-repeat: no-repeat;
             }
@@ -80,6 +91,16 @@ body{
                 width: 33%;
                 height: 80px;
             }
+        }
+    }
+
+    @media (max-width: 500px) {
+        .topbar {
+            width: 100%;
+        }
+        .sidebar {
+            top: 60px;
+            width: 100%;
         }
     }
 }

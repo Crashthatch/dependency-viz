@@ -12,26 +12,28 @@
 
 </head>
 <body>
-    <div class="topbar">
-        <div class="search-container">
-            <form id="search">
-                <input id="search-input" type="text" name="packageName" placeholder="Enter any public npm, packagist, rubygems or Nuget package. eg. gulp."/>
-                <input type="submit" value="Search" class="search-button"></button>
-            </form>
+    <div class="hud">
+        <div class="topbar">
+            <div class="search-container">
+                <form id="search">
+                    <input id="search-input" type="text" name="packageName" placeholder="Enter any public npm, packagist, rubygems or Nuget package. eg. gulp."/>
+                    <input type="submit" value="Search" class="search-button"></button>
+                </form>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="viz-selector">
+                <div class="tree-selector">
+                </div>
+                <div class="pack-selector">
+                </div>
+                <div class="sun-selector">
+                </div>
+            </div>
         </div>
     </div>
     <div class="viz">
         <svg width="100" height="80"></svg>
-    </div>
-    <div class="sidebar">
-        <div class="viz-selector">
-            <div class="tree-selector">
-            </div>
-            <div class="pack-selector">
-            </div>
-            <div class="sun-selector">
-            </div>
-        </div>
     </div>
 </body>
 </html>

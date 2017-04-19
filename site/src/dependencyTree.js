@@ -16,7 +16,7 @@ export function initialize(svg, hierarchy, center, radius){
   })
   .sum(function(d) { return 1; });
 
-  levelSizePx = Math.min(radius / 3, 130);
+  levelSizePx = Math.max(radius / 3, 130);
 
   g = svg.append("g")
     .attr('id', 'tree');
@@ -37,7 +37,7 @@ export function initialize(svg, hierarchy, center, radius){
 
 function project(x, depth) {
   var angle = (x - 90) / 180 * Math.PI;
-  var radius = levelSizePx*depth; //Don't use y, as we don't want to stretch to fit the "1000px" size for small packages with few dependencies.
+  var radius = levelSizePx*Math.max((depth-0.4),0); //Don't use y, as we don't want to stretch to fit the "1000px" size for small packages with few dependencies.
   return [radius * Math.cos(angle), radius * Math.sin(angle)];
 }
 

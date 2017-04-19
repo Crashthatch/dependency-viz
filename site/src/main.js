@@ -29,7 +29,7 @@ function ready(){
     (document.body.clientWidth)/2, //-250 to Make room for sidebar, when we eventually add one.
     (document.body.clientHeight-60)/2+60 //Make room for top bar
   ];
-  radius = Math.min(document.body.clientWidth-200, document.body.clientHeight-80)/2;
+  radius = Math.min(document.body.clientWidth, document.body.clientHeight-80)/2;
 
   //Load data:
   qwest.get('eslint-tree.json')
