@@ -19,7 +19,7 @@ export function initialize(svgg, hierarchy, center, radius){
       if( project.dependency ){
         project.dependencies.push({type: "label", dependencies: [], dependency: {project_name: project.dependency.project_name}})
       }
-      return project.dependencies.filter( x => x ); //Filter out nulls (Not sure why they are in there in the first place).
+      return project.dependencies.filter( x => x ); //Filter out nulls (https://github.com/librariesio/libraries.io/issues/1360)
     }
   })
   .sum(function(d) { return 1; })
@@ -89,7 +89,7 @@ export function updatePack(){
 
   var node = g.selectAll("circle,text");
 
-  svg
+  g
     .on("click", function() { zoom(root); });
 
   zoomTo([root.x, root.y, root.r * 2 + margin]);

@@ -26,7 +26,7 @@ export function initialize(svgg, hierarchy, center, r){
   //Parse data into a hierarchy.
   data = d3.hierarchy(hierarchy, project => {
     if(project.dependencies.length > 0){
-      return project.dependencies.filter( x => x); //Filter out nulls (Not sure why they are in there in the first place).
+      return project.dependencies.filter( x => x); //Filter out nulls (https://github.com/librariesio/libraries.io/issues/1360).
     }
   })
   .sum(function(d) { return 1; })
@@ -52,7 +52,7 @@ export function initialize(svgg, hierarchy, center, r){
 }
 
 function click(d) {
-  svg.transition()
+  g.transition()
     .duration(transitionTime)
     .tween("scale", function() {
       var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),

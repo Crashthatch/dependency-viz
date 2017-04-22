@@ -11,7 +11,7 @@ export function initialize(svg, hierarchy, center, radius){
   //Parse data into a hierarchy.
   data = d3.hierarchy(hierarchy, project => {
     if(project.dependencies.length > 0){
-      return project.dependencies.filter( x => x); //Filter out nulls (Not sure why they are in there in the first place).
+      return project.dependencies.filter( x => x); //Filter out nulls (Due to https://github.com/librariesio/libraries.io/issues/1360).
     }
   })
   .sum(function(d) { return 1; });
@@ -52,12 +52,9 @@ function toggleCollapsed(d) {
   if (d.children) {
     setCollapsed(d);
   }
-  else { //Expand 1 layer.
+  else if(d._children) { //Expand 1 layer.
     d.children = d._children;
     d._children = null;
-    d.children.forEach( (child) => {
-      setCollapsed(child);
-    });
   }
 
   updateTree();
