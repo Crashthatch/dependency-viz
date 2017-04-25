@@ -35,7 +35,7 @@ export function initialize(svg, hierarchy, center, radius){
 }
 
 
-function project(x, depth) {
+function project(x, depth) {  // project, the verb.
   var angle = (x - 90) / 180 * Math.PI;
   var radius = levelSizePx*Math.max((depth-0.4),0); //Don't use y, as we don't want to stretch to fit the "1000px" size for small packages with few dependencies.
   return [radius * Math.cos(angle), radius * Math.sin(angle)];
@@ -162,8 +162,30 @@ export function updateTree(){
     .attr("transform", function(d) { return "translate(" + project(d.x, d.depth) + ")"; });
 
   let allNodesText = g.selectAll('.node text');
-  allNodesText
-    .style("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; }) //Can't smoothly transition "start" to "end".
-    .attr("transform", function(d) { return "rotate(" + (d.x < 180 ? d.x - 90 : d.x + 90) + ")"; })
-    .attr("x", function(d) { return d.x < 180 ? 6 : -6; });
+
+
+  function crosses180degrees(d){
+    if(!d.data.dependency){
+      return true;
+    }
+    let oldLocation = oldLocations.get(d.data.dependency.id);
+    if(!oldLocation){
+      return true;
+    }
+    return (d.x < 180 !== oldLocation.x < 180);
+  }
+
+  //Those that do NOT cross over the 180 degree threshold can be transitioned:
+  let doNotCross180 = allNodesText.filter(d => !crosses180degrees(d))
+    .transition().duration(transitionTime);
+
+  //Can't smoothly transition "start" to "end".
+  let crosses180 = allNodesText.filter(crosses180degrees);
+
+  [doNotCross180, crosses180].map( function(selection){
+    selection
+      .style("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+      .attr("x", function(d) { return d.x < 180 ? 6 : -6; })
+      .attr("transform", function(d) { return "rotate(" + (d.x < 180 ? d.x - 90 : d.x + 90) + ")"; });
+  });
 }
