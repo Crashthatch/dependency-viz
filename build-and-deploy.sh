@@ -12,7 +12,7 @@ docker push 016279857314.dkr.ecr.us-east-1.amazonaws.com/depviz:latest
 hyper pull 016279857314.dkr.ecr.us-east-1.amazonaws.com/depviz:latest
 hyper stop depviz
 hyper rm depviz
-hyper run -d --name depviz --env-file .env --env PORT=80 --env VIRTUAL_HOST=dependencyviz.crashthatch.com -p 80:80 016279857314.dkr.ecr.us-east-1.amazonaws.com/depviz:latest
+hyper run --size s1 -d --name depviz --env-file .env --env PORT=80 --env VIRTUAL_HOST=dependencyviz.crashthatch.com -p 80:80 016279857314.dkr.ecr.us-east-1.amazonaws.com/depviz:latest
 
 # Restarts the load balancer in front of all my websites:
 ../hyper-load-balancer-lb.sh

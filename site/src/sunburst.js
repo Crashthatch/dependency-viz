@@ -2,10 +2,7 @@ import * as d3 from "d3";
 import { transitionTime } from "./config";
 
 var svg, data, g, radius;
-
-var x = d3.scaleLinear()
-  .range([-Math.PI, Math.PI]);
-var y;
+var x, y;
 
 var color = d3.scaleLinear()
   .domain([-1, 10])
@@ -31,6 +28,9 @@ export function initialize(svgg, hierarchy, center, r){
   })
   .sum(function(d) { return 1; })
   .sort(function(a, b) { return b.value - a.value; });
+
+  x = d3.scaleLinear()
+    .range([-Math.PI, Math.PI]);
 
   y = d3.scaleSqrt()
     .range([0, radius]);
