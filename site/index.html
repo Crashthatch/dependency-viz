@@ -17,9 +17,19 @@
         <div class="topbar">
             <div class="search-container">
                 <form id="search">
-                    <input id="search-input" type="text" name="packageName" placeholder="Enter any public npm, packagist, rubygems or Nuget package. eg. gulp."/>
+                    <input id="search-input" type="text" autocomplete="off" name="packageName" placeholder="Enter any public npm, packagist, rubygems or Nuget package. eg. gulp."/>
                     <input type="submit" value="Search" class="search-button"></button>
                 </form>
+            </div>
+            <div class="search-results">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="search-result-master">
+                <div class="search-result-title-row">
+                    <span class="search-result-title">TITLE</span><span class="search-result-version">VER</span>
+                </div>
+                <div class="search-result-description">DESCRIPTION</div>
+                <div class="search-result-details">DETAIL</div>
             </div>
         </div>
         <div class="sidebar">

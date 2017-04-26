@@ -11,6 +11,18 @@ import './style.scss';
 
 let data, radius, center;
 
+function formatDate(date) {
+  var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+
+  return [year, month, day].join('-');
+}
+
 function ready(){
   //Look for livereload if running locally:
   if( window.location.hostname == "localhost" ){
@@ -73,23 +85,51 @@ function ready(){
 
     qwest.get('https://libraries.io/api/search?q='+encodeURIComponent(searchTerm))
     .then(function(xhr, response){
-      if(response.length > 0){
-        return qwest.get('/tree', {platform: response[0].platform, name: response[0].name});
-      }
-    }, function() {
+      $('.search-button').attr('value', 'Search');
+      $('.search-results').html('').show();
+      response.forEach( function(searchResult){
+        let searchResultElt = $('.search-result-master').clone().removeClass('search-result-master').addClass('search-result');
+        searchResultElt.data('platform', searchResult.platform);
+        searchResultElt.data('name', searchResult.name);
+        let date = Date.parse(searchResult.latest_release_published_at);
+        searchResultElt.find('.search-result-title').text(searchResult.name);
+        searchResultElt.find('.search-result-version').text(searchResult.latest_release_number);
+        searchResultElt.find('.search-result-description').text(searchResult.description);
+        searchResultElt.find('.search-result-details').text(searchResult.platform+" - "+searchResult.language+" - Updated "+formatDate(date)+" - "+searchResult.stars+" stars");
+
+        $('.search-results').append(searchResultElt);
+      });
+    }, function(e) {
+      console.error(e);
+      $('.search-button').attr('value', 'Search');
       //TODO: Handle search failure.
-    })
+    });
+  });
+
+  $('.search-results').on('click', '.search-result', function(event){
+    $('.search-button').attr('value', 'Loading...');
+    $('.search-results').hide();
+    let selectedPlatform = $(this).data('platform');
+    let selectedName = $(this).data('name');
+
+    //Get the dependency tree data from libraries.io (via proxy).
+    qwest.get('/tree', {platform: selectedPlatform, name: selectedName})
     .then( function(xhr, response){
       data = response;
       svg.selectAll("*").remove();
       circlePack.initialize(svg, _.cloneDeep(data), center, radius);
 
-    }, function(){
+    }, function(e){
+      console.error(e);
       //TODO: Handle tree get failure.
     })
     .then(function(){
       $('.search-button').attr('value', 'Search');
     });
+  });
+
+  $('svg').on('click', function(){
+    $('.search-results').hide();
   });
 
 }
